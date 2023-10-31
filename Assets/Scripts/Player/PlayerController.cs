@@ -60,19 +60,49 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AnimatorClipInfo[] curPlayingClips = anim.GetCurrentAnimatorClipInfo(0);
         float hInput = Input.GetAxisRaw("Horizontal");
         
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
+        if (isGrounded) rb.gravityScale = 1;
         
+
+        if (curPlayingClips.Length > 0)
+        {
+            if (curPlayingClips[0].clip.name == "Fire")
+                rb.velocity = Vector2.zero;
+            else
+            {
+                Vector2 moveDirection = new Vector2(hInput * speed, rb.velocity.y);
+                rb.velocity = moveDirection;
+            }
+        }
+
+
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb.AddForce(Vector2.up * jumpForce);
         }
-        
-        Vector2 moveDirection = new Vector2(hInput * speed, rb.velocity.y);
-        rb.velocity = moveDirection;
+
+        if (!isGrounded && Input.GetButtonDown("Jump"))
+            anim.SetTrigger("JumpAttack");
+
+
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            anim.SetTrigger("Fire");
+        }
 
         anim.SetFloat("hInput", Mathf.Abs(hInput));
         anim.SetBool("isGrounded", isGrounded);
+
+        //flip functionality
+        if (hInput != 0) sr.flipX = (hInput < 0);
+    }
+
+    public void IncreaseGravity()
+    {
+        rb.gravityScale = 10;
     }
 }
