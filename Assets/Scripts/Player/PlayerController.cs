@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
 
+
     //Movement variables
     public float speed = 5.0f;
     public float jumpForce = 300.0f;
@@ -104,5 +105,38 @@ public class PlayerController : MonoBehaviour
     public void IncreaseGravity()
     {
         rb.gravityScale = 10;
+    }
+
+    //called the frame that the collision happens
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
+    //called the frame that the collision exits
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        
+    }
+    
+    //called on the second frame while in the collision, and continously called while you remain in the collider.
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
     }
 }
