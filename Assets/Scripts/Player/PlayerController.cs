@@ -10,7 +10,43 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
 
+    Coroutine jumpForceChange;
 
+
+    private int _score = 0;
+    public int score
+    {
+        get => _score;
+        set
+        {
+            _score = value;
+            Debug.Log("Score has ben set to: " + _score.ToString());
+        }
+    }
+
+    private int _lives = 3;
+
+    public int lives
+    {
+        get => _lives;
+        set
+        {
+            //if (_lives > value)
+            //Respawn = lost a life
+
+            _lives = value;
+
+            if (_lives > maxLives)
+                _lives = maxLives;
+
+            //if (_lives < 0)
+            //gameover
+
+            Debug.Log("Lives has ben set to: " + _lives.ToString());
+        }
+    }
+    public int maxLives = 5;
+    
     //Movement variables
     public float speed = 5.0f;
     public float jumpForce = 300.0f;
@@ -107,6 +143,27 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 10;
     }
 
+    public void StartJumpForceChange()
+    {
+        if (jumpForceChange == null) jumpForceChange = StartCoroutine(JumpForceChange());
+        else
+        {
+            StopCoroutine(jumpForceChange);
+            jumpForceChange = null;
+            jumpForce /= 2;
+            jumpForceChange = StartCoroutine(JumpForceChange());
+        }
+
+    }
+    
+    IEnumerator JumpForceChange()
+    {
+        jumpForce *= 2;
+        yield return new WaitForSeconds(5.0f);
+        jumpForce /= 2;
+        jumpForceChange = null;
+    }
+
     //called the frame that the collision happens
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -122,16 +179,12 @@ public class PlayerController : MonoBehaviour
     //called on the second frame while in the collision, and continously called while you remain in the collider.
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Pickup"))
-        {
-            //dosomething and remove pickup.
-            Destroy(collision.gameObject);
-        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
