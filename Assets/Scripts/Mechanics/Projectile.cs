@@ -22,6 +22,7 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
+    //Player Projectile is a collider
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -29,9 +30,24 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Enemy") && gameObject.CompareTag("PlayerProjectile"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+    }
+
+    //Enemy Projectile is a trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Player"))
+        {
+            GameManager.Instance.lives--;
             Destroy(gameObject);
         }
     }

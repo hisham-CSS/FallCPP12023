@@ -11,41 +11,6 @@ public class PlayerController : MonoBehaviour
     Animator anim;
 
     Coroutine jumpForceChange;
-
-
-    private int _score = 0;
-    public int score
-    {
-        get => _score;
-        set
-        {
-            _score = value;
-            Debug.Log("Score has ben set to: " + _score.ToString());
-        }
-    }
-
-    private int _lives = 3;
-
-    public int lives
-    {
-        get => _lives;
-        set
-        {
-            //if (_lives > value)
-            //Respawn = lost a life
-
-            _lives = value;
-
-            if (_lives > maxLives)
-                _lives = maxLives;
-
-            //if (_lives < 0)
-            //gameover
-
-            Debug.Log("Lives has ben set to: " + _lives.ToString());
-        }
-    }
-    public int maxLives = 5;
     
     //Movement variables
     public float speed = 5.0f;
