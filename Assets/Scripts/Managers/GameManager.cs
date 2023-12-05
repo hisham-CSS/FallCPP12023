@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
+[DefaultExecutionOrder(-1)]
 public class GameManager : MonoBehaviour
 {
     static GameManager instance = null;
@@ -36,11 +38,14 @@ public class GameManager : MonoBehaviour
             //gameover
 
             Debug.Log("Lives has ben set to: " + _lives.ToString());
+            OnLivesValueChanged?.Invoke(_lives);
         }
     }
     public int maxLives = 5;
 
     public PlayerController playerPrefab;
+    public UnityEvent<int> OnLivesValueChanged;
+
     [HideInInspector] public PlayerController playerInstance;
     [HideInInspector] public Transform spawnPoint;
 
@@ -67,6 +72,11 @@ public class GameManager : MonoBehaviour
             else
                 SceneManager.LoadScene(1);
         }
+    }
+
+    public void ChangeScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void SpawnPlayer(Transform spawnLocation)
