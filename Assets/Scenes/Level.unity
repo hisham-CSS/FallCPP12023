@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e6b0a4f59b7034887dd1517110c336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
   playButton: {fileID: 0}
   settingsButton: {fileID: 0}
   quitButton: {fileID: 1412418185}
@@ -352,8 +353,12 @@ MonoBehaviour:
   pauseMenu: {fileID: 462369002}
   settingsMenu: {fileID: 0}
   livesText: {fileID: 393427354}
-  volSliderText: {fileID: 0}
-  volSlider: {fileID: 0}
+  masterVolSliderText: {fileID: 0}
+  musicVolSliderText: {fileID: 0}
+  sfxVolSliderText: {fileID: 0}
+  masterVolSlider: {fileID: 0}
+  musicVolSlider: {fileID: 0}
+  sfxVolSlider: {fileID: 0}
 --- !u!114 &231211875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,10 +1788,6 @@ PrefabInstance:
     - target: {fileID: 4844419507389437104, guid: 62f267292db8db540b68bfb6175d73f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220340701734766084, guid: 62f267292db8db540b68bfb6175d73f5, type: 3}
-      propertyPath: playerTransform
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

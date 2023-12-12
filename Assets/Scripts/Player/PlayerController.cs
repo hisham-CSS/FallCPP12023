@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator anim;
+    AudioSourceManager asm;
+    Shoot shootScript;
 
     Coroutine jumpForceChange;
     
@@ -22,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask isGroundLayer;
     public float groundCheckRadius = 0.02f;
 
+    public AudioClip jumpSound;
+    public AudioClip fireSound;
+    public AudioClip stompSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +35,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        asm = GetComponent<AudioSourceManager>();
+        shootScript = GetComponent<Shoot>();
 
         //checking variables for dirty data
         if (rb == null) Debug.Log("No RigidBody Reference");
         if (sr == null) Debug.Log("No Sprite Renderer Reference");
         if (anim == null) Debug.Log("No animator reference");
+        if (asm == null) Debug.Log("No audio source manager!");
+        if (shootScript == null) Debug.Log("No shoot script added!");
+
         if (groundCheckRadius <= 0)
         {
             groundCheckRadius = 0.02f;
@@ -56,7 +67,19 @@ public class PlayerController : MonoBehaviour
             obj.transform.localPosition = Vector3.zero;
             obj.name = "GroundCheck";
             groundCheck = obj.transform;
-        }    
+        }
+
+        shootScript.OnProjectileSpawned += OnProjectileSpawned;
+    }
+
+    public void PlayPickupSound(AudioClip clip)
+    {
+        asm.PlayOneShot(clip, false);
+    }    
+
+    void OnProjectileSpawned()
+    {
+        asm.PlayOneShot(fireSound, false);
     }
 
     // Update is called once per frame
@@ -84,6 +107,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb.AddForce(Vector2.up * jumpForce);
+            asm.PlayOneShot(jumpSound, false);
         }
 
         if (!isGrounded && Input.GetButtonDown("Jump"))
@@ -109,7 +133,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void StartJumpForceChange()
-    {
+    {     
         if (jumpForceChange == null) jumpForceChange = StartCoroutine(JumpForceChange());
         else
         {
@@ -155,6 +179,7 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
+            asm.PlayOneShot(stompSound, false);
         }
     }
 

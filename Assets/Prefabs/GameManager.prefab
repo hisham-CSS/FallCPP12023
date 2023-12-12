@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5986bad25b2a824b9c9f6239dfb26c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeSound: {fileID: 8300000, guid: 0a985f3f87b7a8642b0b4044048baaa9, type: 3}
+  scoreSound: {fileID: 8300000, guid: e15e10768e9a6a3499aacc2b18725b0e, type: 3}
   maxLives: 5
   playerPrefab: {fileID: 7790486787603269012, guid: 84a8c04d37aa4244aad8b5d840feffaa, type: 3}
+  OnLivesValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
   playerInstance: {fileID: 0}
   spawnPoint: {fileID: 0}

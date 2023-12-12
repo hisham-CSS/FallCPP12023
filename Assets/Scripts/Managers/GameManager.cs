@@ -41,7 +41,11 @@ public class GameManager : MonoBehaviour
             OnLivesValueChanged?.Invoke(_lives);
         }
     }
+
+    public AudioClip lifeSound;
+    public AudioClip scoreSound;
     public int maxLives = 5;
+
 
     public PlayerController playerPrefab;
     public UnityEvent<int> OnLivesValueChanged;

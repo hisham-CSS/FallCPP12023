@@ -12,11 +12,14 @@ public class Pickups : MonoBehaviour
     }
 
     public PickupType currentPickup;
+    public AudioClip pickupSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            collision.GetComponent<PlayerController>().PlayPickupSound(pickupSound);
+
             switch (currentPickup)
             {
                 case PickupType.Powerup:

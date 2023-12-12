@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+    public event Action OnProjectileSpawned;
+
     SpriteRenderer sr;
     
     public float xVelocity;
@@ -36,5 +39,7 @@ public class Shoot : MonoBehaviour
             Projectile curProjectile = Instantiate(projectilePrefab, spawnPointLeft.position, spawnPointLeft.rotation);
             curProjectile.initVel = new Vector2(-xVelocity, yVelocity);
         }
+
+        OnProjectileSpawned?.Invoke();
     }
 }
